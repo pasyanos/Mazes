@@ -16,19 +16,18 @@ class Grid:
 
     def each_row(self):
         for row in self.grid:
-
             yield row
 
     def __getitem__(self, index):
         x, y = index
-        if x < 0 or x >= self.rows:
+        if x < 0 or x >= self.columns:
             return None
-        if y < 0 or y >= self.columns:
+        if y < 0 or y >= self.rows:
             return None
-        return self.grid[x][y]
+        return self.grid[y][x]
 
     def prepare_grid(self):
-        return [[Cell(x, y) for x in range(self.rows)] for y in range(self.columns)]
+        return [[Cell(x, y) for x in range(self.columns)] for y in range(self.rows)]
 
     def configure_cells(self):
         for cell in self.each_cell():
@@ -43,15 +42,15 @@ class Grid:
             # print("cell east of ", cell, " is ", cell.east)
 
     def __str__(self):
-        output = "+" + "---+" * self.columns + "\n"
+        output = "+" + "----+" * self.columns + "\n"
         for row in self.each_row():
             top = "|"
             bottom = "+"
             for cell in row:
-                body = "   "
+                body = "    "
                 east_boundary = " " if cell.is_linked(cell.east) else "|"
                 top += body + east_boundary
-                south_boundary = "   " if cell.is_linked(cell.south) else "---"
+                south_boundary = "    " if cell.is_linked(cell.south) else "----"
                 corner = "+"
                 bottom += south_boundary + corner
             output += top + "\n"

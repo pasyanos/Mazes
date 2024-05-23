@@ -8,8 +8,8 @@ class BinaryTree(MazeRecipe):
         for cell in maze.each_cell():
             # print("cell is ", cell)
             neighbors = []
-            if cell.south:
-                neighbors.append(cell.south)
+            if cell.north:
+                neighbors.append(cell.north)
             if cell.east:
                 neighbors.append(cell.east)
 
