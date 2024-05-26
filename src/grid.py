@@ -1,7 +1,7 @@
 from cell import Cell
 
 
-# A grid of cells
+# A grid is a 2D array of cells. It is the base for all mazes.
 class Grid:
     def __init__(self, rows: int, columns: int):
         self.rows = rows
@@ -18,6 +18,7 @@ class Grid:
         for row in self.grid:
             yield row
 
+    # override so we can use brackets to access cells. Accounts for OOB indexing by returning None
     def __getitem__(self, index):
         x, y = index
         if x < 0 or x >= self.columns:
@@ -29,6 +30,7 @@ class Grid:
     def prepare_grid(self):
         return [[Cell(x, y) for x in range(self.columns)] for y in range(self.rows)]
 
+    # After creating the grid and its cells, link each cell to its neighbors
     def configure_cells(self):
         for cell in self.each_cell():
             x, y = cell.x_index, cell.y_index
@@ -41,6 +43,8 @@ class Grid:
             cell.east = self[x + 1, y]
             # print("cell east of ", cell, " is ", cell.east)
 
+    # Ascii character representation of the grid.
+    # This is not explicitly used anymore, but it's a good debugging tool.
     def __str__(self):
         output = "+" + "----+" * self.columns + "\n"
         for row in self.each_row():

@@ -5,6 +5,7 @@ from display import displayGrid
 import argparse
 
 
+# Creates a grid, generates a maze using the specified model, and displays the maze.
 def main(model: str, rows: int, columns: int, sw_bias: float):
     grid = Grid(rows, columns)
 
@@ -15,14 +16,17 @@ def main(model: str, rows: int, columns: int, sw_bias: float):
     else:
         raise ValueError(f"Unknown model: {model}")
 
+    # PNG output of the maze
     displayGrid(grid)
 
 
+# The main entry point for the program. The parser handles configurable arguments.
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate a maze")
     parser.add_argument("--rows", type=int, help="Number of rows in the maze", default=4)
     parser.add_argument("--columns", type=int, help="Number of columns in the maze", default=4)
 
+    # sub parsers for the different algorithms
     sub_parser = parser.add_subparsers(dest="algorithm", required=True)
     sub_parser.add_parser("binary_tree", help="Run binary tree algorithm")
     sidewinder = sub_parser.add_parser("sidewinder", help="Run sidewinder algorithm")
